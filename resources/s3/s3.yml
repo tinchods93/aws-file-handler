@@ -1,0 +1,15 @@
+Resources:
+  FilesStorageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${file(resources/index.json):s3.fileStorage} # Cambia esto al nombre que desees para tu bucket
+      AccessControl: Private
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+            AllowedOrigins:
+              - '*'
+            MaxAge: 3000

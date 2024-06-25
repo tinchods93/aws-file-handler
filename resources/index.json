@@ -1,0 +1,15 @@
+{
+    "functions": {
+        "uploadImage": "${self:custom.stackPrefix}-uploadImageAction",
+        "uploadFile": "${self:custom.stackPrefix}-uploadFileAction",
+        "getFile": "${self:custom.stackPrefix}-getFileAction",
+        "updateFile": "${self:custom.stackPrefix}-updateFileAction",
+        "deleteFile": "${self:custom.stackPrefix}-deleteFileAction"
+    },
+    "tables": {
+        "filesMetadata": "${self:custom.stackPrefix}-filesMetadata"
+    },
+    "s3": {
+        "fileStorage": "${self:custom.stackPrefix}-file-storage"
+    }
+}

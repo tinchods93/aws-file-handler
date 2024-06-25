@@ -1,0 +1,78 @@
+uploadFile:
+  handler: src/infrastructure/primary/uploadFile.handler
+  description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+  name: ${file(resources/index.json):functions.uploadFile}
+  timeout: 25
+  logRetentionInDays: 14
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resources/index.json):functions.uploadFile}
+  iamRoleStatements: ${file(resources/iamRoleStatements/uploadFile.yml)}
+  events:
+    - http:
+        path: files/upload
+        method: post
+        cors: true
+        request:
+          contentHandling: CONVERT_TO_BINARY
+
+getFile:
+  handler: src/infrastructure/primary/getFile.handler
+  description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+  name: ${file(resources/index.json):functions.getFile}
+  timeout: 25
+  logRetentionInDays: 14
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resources/index.json):functions.getFile}
+  iamRoleStatements: ${file(resources/iamRoleStatements/getFile.yml)}
+  events:
+    - http:
+        path: files/{fileName}
+        method: get
+        cors: true
+
+# deleteFile:
+#   handler: src/infrastructure/primary/deleteFile.handler
+#   description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+#   name: ${file(resources/index.json):functions.deleteFile}
+#   timeout: 25
+#   logRetentionInDays: 14
+#   iamRoleStatementsInherit: true
+#   iamRoleStatementsName: ${file(resources/index.json):functions.deleteFile}
+#   iamRoleStatements: ${file(resources/iamRoleStatements/deleteFile.yml)}
+#   events:
+#     - http:
+#         path: files/{fileName}
+#         method: delete
+#         cors: true
+
+updateFile:
+  handler: src/infrastructure/primary/updateFile.handler
+  description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+  name: ${file(resources/index.json):functions.updateFile}
+  timeout: 25
+  logRetentionInDays: 14
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resources/index.json):functions.updateFile}
+  iamRoleStatements: ${file(resources/iamRoleStatements/updateFile.yml)}
+  events:
+    - http:
+        path: files/{fileName}
+        method: put
+        cors: true
+
+uploadImage:
+  handler: src/infrastructure/primary/uploadImage.handler
+  description: 'Receives an image and uploads it to Cloudinary. The image is then stored in the database and a response is returned with the image URL and the image ID'
+  name: ${file(resources/index.json):functions.uploadImage}
+  timeout: 25
+  logRetentionInDays: 14
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resources/index.json):functions.uploadImage}
+  iamRoleStatements: ${file(resources/iamRoleStatements/uploadImage.yml)}
+  events:
+    - http:
+        path: images/upload
+        method: post
+        cors: true
+        request:
+          contentHandling: CONVERT_TO_BINARY
