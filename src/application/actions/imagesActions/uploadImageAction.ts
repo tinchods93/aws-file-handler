@@ -1,18 +1,18 @@
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'tsyringe';
-import ActionResponse from '../entities/actionResponse';
-import { ActionResponseInterface } from '../entities/interfaces/actionResponseInterface';
+import ActionResponse from '../../entities/actionResponse';
+import { ActionResponseInterface } from '../../entities/interfaces/actionResponseInterface';
 import {
   FILE_REPOSITORY_TOKEN,
   FileRepositoryInterface,
-} from '../repositories/interfaces/fileRepositoryInterface';
-import { ApplicationActionInterface } from './interfaces/applicationActionInterface';
-import ZodSchemaValidation from '../schemas/ZodSchema';
-import { HandlerCommandType } from '../../infrastructure/primary/types/handlerTypes';
-import { uploadFileInputSchema } from '../schemas/zodSchemas/uploadFileInputSchema';
+} from '../../repositories/interfaces/fileRepositoryInterface';
+import { ApplicationActionInterface } from '../interfaces/applicationActionInterface';
+import ZodSchemaValidation from '../../schemas/ZodSchema';
+import { HandlerCommandType } from '../../../infrastructure/primary/types/handlerTypes';
+import { uploadFileInputSchema } from '../../schemas/zodSchemas/uploadFileInputSchema';
 
 @injectable()
-export default class UploadFileAction implements ApplicationActionInterface {
+export default class UploadImageAction implements ApplicationActionInterface {
   private actionResponse: ActionResponseInterface;
 
   constructor(
@@ -25,9 +25,8 @@ export default class UploadFileAction implements ApplicationActionInterface {
   public execute = async (commandPayload: HandlerCommandType) => {
     try {
       console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> commandPayload',
-        commandPayload?.body?.uploaderId,
-        commandPayload?.body?.tags
+        'MARTIN_LOG=> UploadImageAction -> execute -> commandPayload',
+        commandPayload?.body
       );
 
       const payload = new ZodSchemaValidation(uploadFileInputSchema).validate(
@@ -36,22 +35,21 @@ export default class UploadFileAction implements ApplicationActionInterface {
 
       console.log('MARTIN_LOG=> payload', { payload });
 
-      const response = await this.fileRepository.uploadFile(payload);
+      const response = await this.fileRepository.uploadImage(payload);
 
       console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> response',
+        'MARTIN_LOG=> UploadImageAction -> execute -> response',
         response
       );
-
       return this.actionResponse.success({
         statusCode: StatusCodes.CREATED,
         data: {
-          message: 'File uploaded successfully',
+          message: 'Image uploaded successfully',
           ...response,
         },
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> UploadFileAction -> execute -> error', error);
+      console.log('MARTIN_LOG=> UploadImageAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,

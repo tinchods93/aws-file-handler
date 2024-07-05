@@ -8,6 +8,7 @@ export interface FileServiceInterface {
     uploaderId: string,
     tags?: string
   ): Promise<ImageEntityTableItemType>;
+  deleteImage(publicId: string): Promise<any>;
   uploadFileToS3(file: string, uploaderId: string, tags?: string): Promise<any>;
   getFileFromS3(key: string): Promise<any>;
   deleteFileFromS3(key: string): Promise<any>;

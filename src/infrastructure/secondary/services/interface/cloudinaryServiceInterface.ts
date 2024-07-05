@@ -7,4 +7,5 @@ export interface CloudinaryServiceInterface {
     file: string,
     publicId: string
   ): Promise<CloudinaryUploadResponseType>;
+  deleteImage(publicId: string): Promise<any>;
 }

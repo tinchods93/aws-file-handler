@@ -2,12 +2,11 @@ import 'reflect-metadata';
 import commandInput from 'rebased/handler/input/commandApi';
 import commandOutput from 'rebased/handler/output/commandApi';
 import { commandMapper } from 'rebased/handler';
-import depsContainer from '../../depsContainer';
-import GetFileAction from '../../application/actions/getFileAction';
+import depsContainer from '../../../depsContainer';
+import UploadFileAction from '../../../application/actions/filesActions/uploadFileAction';
 
 export const handler = async (command, context) => {
-  // console.log('MARTIN_LOG=> uploadImage -> command', command);
-  const action = depsContainer.resolve(GetFileAction);
+  const action = depsContainer.resolve(UploadFileAction);
 
   const actionResponse = await commandMapper(
     { command, context },

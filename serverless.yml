@@ -5,6 +5,7 @@ frameworkVersion: '>=3'
 
 custom:
   useDotenv: true
+  config: ${file(config/index.js)}
   stackPrefix: ${self:service}-${self:provider.stage}
 
   tokenSecurityPrefix: aws-token-security-${self:provider.stage}
@@ -51,9 +52,6 @@ provider:
     JWT_SECRET: 'test-secret'
     OWNER_PROJECT_NAME: 'Protoprime'
     FILES_METADATA_TABLE_NAME: ${file(resources/index.json):tables.filesMetadata}
-    CLOUDINARY_CLOUD_NAME: ${env:CLOUDINARY_CLOUD_NAME}
-    CLOUDINARY_API_KEY: ${env:CLOUDINARY_API_KEY}
-    CLOUDINARY_API_SECRET: ${env:CLOUDINARY_API_SECRET}
     FILE_BUCKET_NAME: ${file(resources/index.json):s3.fileStorage}
 
 package:
@@ -68,11 +66,12 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-prune-plugin
   - serverless-webpack
+  - serverless-dotenv-plugin
 
 resources:
   - ${file(resources/tables/table.yml)}
   - ${file(resources/s3/s3.yml)}
-  # - ${file(resources/authorizer/authorizer.yml)}
+  - ${file(resources/apiGateway/authorizer.yml)}
 
 functions:
   - ${file(src/functions.yml)}

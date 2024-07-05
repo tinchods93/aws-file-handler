@@ -8,6 +8,7 @@ export interface FileRepositoryInterface {
     uploaderId: string;
     tags?: string;
   }): Promise<ImageEntityTableItemType>;
+  deleteImage(payload: { publicId: string }): Promise<any>;
   uploadFile(payload: {
     file: string;
     uploaderId: string;

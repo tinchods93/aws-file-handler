@@ -4,4 +4,5 @@ export type HandlerCommandType = {
   stage?: any;
   body?: any;
   headers?: any;
+  requestContext?: any;
 };

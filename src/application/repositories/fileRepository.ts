@@ -38,6 +38,22 @@ export default class FileRepository implements FileRepositoryInterface {
     }
   }
 
+  async deleteImage(payload: { publicId: string }): Promise<any> {
+    try {
+      const response = await this.fileService.deleteImage(payload.publicId);
+      return response;
+    } catch (error) {
+      console.log('MARTIN_LOG=> FileRepository -> deleteImage -> error', error);
+      throw FileServiceException.handle({
+        message: error.message,
+        code: ErrorCodesEnum.DELETE_IMAGE_FAILED,
+        status: error.status,
+        payload,
+        error,
+      });
+    }
+  }
+
   async uploadFile(payload: {
     file: string;
     uploaderId: string;

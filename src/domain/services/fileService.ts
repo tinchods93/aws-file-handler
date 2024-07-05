@@ -92,6 +92,23 @@ export default class FileService implements FileServiceInterface {
     }
   }
 
+  async deleteImage(publicId: string): Promise<any> {
+    // eliminamos la imagen de cloudinary
+    const response = await this.cloudinaryService.deleteImage(publicId);
+    console.log(
+      'MARTIN_LOG=> FileService -> deleteImage -> response',
+      response
+    );
+    // eliminamos la metadata de la imagen de la tabla
+    const key = `${EntitiesEnum.IMAGE}#${publicId}`;
+
+    await this.tableService.delete({ pk: key, sk: key });
+
+    return {
+      message: 'Image deleted successfully',
+    };
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async uploadFileToS3(file: string, uploaderId: string, tags?: string) {
     // Extraer el tipo de medio y los datos del archivo de la cadena base64

@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint --fix;",
     "test:integration": "sh ./scripts/integration_test.sh",
-    "deploy": "sls deploy --stage develop --force",
+    "deploy": "sls deploy --stage develop",
     "remove": "sls remove --stage develop",
     "package": "sls package",
     "test": "jest ./tests/unit/zodSchemaValidation.test.ts --setupFiles dotenv/config --verbose",
@@ -31,6 +31,7 @@
     "moment-timezone": "^0.5.45",
     "rebased": "^1.1.0",
     "reflect-metadata": "^0.2.2",
+    "serverless-dotenv-plugin": "^6.0.0",
     "uuid": "^9.0.1",
     "zod": "^3.23.8"
   },

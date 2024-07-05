@@ -46,4 +46,18 @@ export default class CloudinaryService implements CloudinaryServiceInterface {
       originalUrl: response.secure_url,
     };
   }
+
+  async deleteImage(publicId: string): Promise<any> {
+    const response = await cloudinary.uploader
+      .destroy(publicId)
+      .catch((error) => {
+        console.log(
+          'MARTIN_LOG=> CloudinaryService -> deleteImage -> error',
+          error
+        );
+        throw error;
+      });
+
+    return response;
+  }
 }

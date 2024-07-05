@@ -1,5 +1,5 @@
 uploadFile:
-  handler: src/infrastructure/primary/uploadFile.handler
+  handler: src/infrastructure/primary/handlers/uploadFile.handler
   description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
   name: ${file(resources/index.json):functions.uploadFile}
   timeout: 25
@@ -14,9 +14,12 @@ uploadFile:
         cors: true
         request:
           contentHandling: CONVERT_TO_BINARY
+        authorizer:
+          type: CUSTOM
+          authorizerId: { Ref: Authorizer }
 
 getFile:
-  handler: src/infrastructure/primary/getFile.handler
+  handler: src/infrastructure/primary/handlers/getFile.handler
   description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
   name: ${file(resources/index.json):functions.getFile}
   timeout: 25
@@ -29,9 +32,12 @@ getFile:
         path: files/{fileName}
         method: get
         cors: true
+        authorizer:
+          type: CUSTOM
+          authorizerId: { Ref: Authorizer }
 
 # deleteFile:
-#   handler: src/infrastructure/primary/deleteFile.handler
+#   handler: src/infrastructure/primary/handlers/deleteFile.handler
 #   description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
 #   name: ${file(resources/index.json):functions.deleteFile}
 #   timeout: 25
@@ -44,9 +50,12 @@ getFile:
 #         path: files/{fileName}
 #         method: delete
 #         cors: true
+        # authorizer:
+        #   type: CUSTOM
+        #   authorizerId: { Ref: Authorizer }
 
 updateFile:
-  handler: src/infrastructure/primary/updateFile.handler
+  handler: src/infrastructure/primary/handlers/updateFile.handler
   description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
   name: ${file(resources/index.json):functions.updateFile}
   timeout: 25
@@ -59,9 +68,12 @@ updateFile:
         path: files/{fileName}
         method: put
         cors: true
+        authorizer:
+          type: CUSTOM
+          authorizerId: { Ref: Authorizer }
 
 uploadImage:
-  handler: src/infrastructure/primary/uploadImage.handler
+  handler: src/infrastructure/primary/handlers/uploadImage.handler
   description: 'Receives an image and uploads it to Cloudinary. The image is then stored in the database and a response is returned with the image URL and the image ID'
   name: ${file(resources/index.json):functions.uploadImage}
   timeout: 25
@@ -76,3 +88,24 @@ uploadImage:
         cors: true
         request:
           contentHandling: CONVERT_TO_BINARY
+        authorizer:
+          type: CUSTOM
+          authorizerId: { Ref: Authorizer }
+
+deleteImage:
+  handler: src/infrastructure/primary/handlers/deleteImage.handler
+  description: 'Deletes an image from the Cloudinary and removes its metadata from the table.'
+  name: ${file(resources/index.json):functions.deleteImage}
+  timeout: 25
+  logRetentionInDays: 14
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resources/index.json):functions.deleteImage}
+  iamRoleStatements: ${file(resources/iamRoleStatements/deleteImage.yml)}
+  events:
+    - http:
+        path: images/{publicId}
+        method: delete
+        cors: true
+        # authorizer:
+        #   type: CUSTOM
+        #   authorizerId: { Ref: Authorizer }

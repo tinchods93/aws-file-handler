@@ -1,6 +1,7 @@
 {
     "functions": {
         "uploadImage": "${self:custom.stackPrefix}-uploadImageAction",
+        "deleteImage": "${self:custom.stackPrefix}-deleteImageAction",
         "uploadFile": "${self:custom.stackPrefix}-uploadFileAction",
         "getFile": "${self:custom.stackPrefix}-getFileAction",
         "updateFile": "${self:custom.stackPrefix}-updateFileAction",
