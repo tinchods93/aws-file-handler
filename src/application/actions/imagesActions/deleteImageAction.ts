@@ -28,18 +28,13 @@ export default class DeleteImageAction implements ApplicationActionInterface {
         commandPayload.parameters ?? commandPayload.body
       );
 
-      console.log('MARTIN_LOG=> payload', payload);
       const response = await this.fileRepository.deleteImage(payload);
-      console.log(
-        'MARTIN_LOG=> DeleteFileAction -> execute -> response',
-        response
-      );
+
       return this.actionResponse.success({
         statusCode: StatusCodes.OK,
         data: response,
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> DeleteFileAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,

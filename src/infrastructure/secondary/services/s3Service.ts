@@ -19,10 +19,7 @@ export default class S3Service implements S3ServiceInterface {
       ContentType: mediaType,
     };
     const response = await s3.uploadFile(params);
-    console.log(
-      'MARTIN_LOG=> S3Service -> uploadFileToS3 -> response',
-      response
-    );
+
     return response;
   }
 
@@ -32,10 +29,7 @@ export default class S3Service implements S3ServiceInterface {
       Key: key,
     };
     const response = await s3.getFile(params);
-    console.log(
-      'MARTIN_LOG=> S3Service -> getFileFromS3 -> response',
-      response
-    );
+
     return response;
   }
 
@@ -45,12 +39,8 @@ export default class S3Service implements S3ServiceInterface {
       Key: key,
       expiresIn: 3600,
     };
-    console.log('MARTIN_LOG=> S3Service -> getSignedurl -> params', params);
     const response = await s3.getSignedUrl(params);
-    console.log(
-      'MARTIN_LOG=> S3Service -> getSignedurlFromS3 -> response',
-      response
-    );
+
     return response;
   }
 
@@ -60,10 +50,7 @@ export default class S3Service implements S3ServiceInterface {
       Key: key,
     };
     const response = await s3.deleteFile(params);
-    console.log(
-      'MARTIN_LOG=> S3Service -> deleteFileFromS3 -> response',
-      response
-    );
+
     return response;
   }
 }

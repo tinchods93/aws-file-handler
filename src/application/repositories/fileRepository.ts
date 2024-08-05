@@ -27,7 +27,6 @@ export default class FileRepository implements FileRepositoryInterface {
       );
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> uploadImage -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.UPLOAD_IMAGE_FAILED,
@@ -43,7 +42,6 @@ export default class FileRepository implements FileRepositoryInterface {
       const response = await this.fileService.deleteImage(payload.publicId);
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> deleteImage -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.DELETE_IMAGE_FAILED,
@@ -67,7 +65,6 @@ export default class FileRepository implements FileRepositoryInterface {
       );
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> uploadFile -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.UPLOAD_FILE_FAILED,
@@ -83,7 +80,6 @@ export default class FileRepository implements FileRepositoryInterface {
       const response = await this.fileService.getFileFromS3(payload.fileName);
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> uploadImage -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.GET_FILE_FAILED,
@@ -101,7 +97,6 @@ export default class FileRepository implements FileRepositoryInterface {
       );
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> uploadImage -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.DELETE_FILE_FAILED,
@@ -120,7 +115,6 @@ export default class FileRepository implements FileRepositoryInterface {
       );
       return response;
     } catch (error) {
-      console.log('MARTIN_LOG=> FileRepository -> updateFile -> error', error);
       throw FileServiceException.handle({
         message: error.message,
         code: ErrorCodesEnum.UPDATE_FILE_FAILED,

@@ -31,11 +31,6 @@ export default class UpdateFileAction implements ApplicationActionInterface {
 
       const response = await this.fileRepository.updateFile(payload);
 
-      console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> response',
-        response
-      );
-
       return this.actionResponse.success({
         statusCode: StatusCodes.CREATED,
         data: {
@@ -44,7 +39,6 @@ export default class UpdateFileAction implements ApplicationActionInterface {
         },
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> UploadFileAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,

@@ -62,47 +62,32 @@ export default class FileService implements FileServiceInterface {
     uploaderId: string,
     tags?: string | undefined
   ): Promise<ImageEntityTableItemType> {
-    try {
-      console.log(
-        'MARTIN_LOG=> FileService -> uploadImage -> this.imageEntity.publicId',
-        this.imageEntity.publicId
-      );
-      const response = await this.cloudinaryService.uploadImage(
-        imageFile,
-        this.imageEntity.publicId
-      );
+    const response = await this.cloudinaryService.uploadImage(
+      imageFile,
+      this.imageEntity.publicId
+    );
 
-      const imageEntityInstance = this.imageEntity.build({
-        cloudinaryUrl: response.optimizedUrl,
-        uploaderId,
-        tags,
-      });
+    const imageEntityInstance = this.imageEntity.build({
+      cloudinaryUrl: response.optimizedUrl,
+      uploaderId,
+      tags,
+    });
 
-      console.log(
-        'MARTIN_LOG=> FileService -> uploadImage -> imageEntityInstance',
-        imageEntityInstance
-      );
+    await this.tableService.create(imageEntityInstance);
 
-      await this.tableService.create(imageEntityInstance);
-
-      return imageEntityInstance;
-    } catch (error) {
-      console.log('MARTIN_LOG=> FileService -> uploadImage -> error', error);
-      throw error;
-    }
+    return imageEntityInstance;
   }
 
   async deleteImage(publicId: string): Promise<any> {
     // eliminamos la imagen de cloudinary
-    const response = await this.cloudinaryService.deleteImage(publicId);
-    console.log(
-      'MARTIN_LOG=> FileService -> deleteImage -> response',
-      response
-    );
+
     // eliminamos la metadata de la imagen de la tabla
     const key = `${EntitiesEnum.IMAGE}#${publicId}`;
 
-    await this.tableService.delete({ pk: key, sk: key });
+    await Promise.all([
+      this.cloudinaryService.deleteImage(publicId),
+      this.tableService.delete({ pk: key, sk: key }),
+    ]);
 
     return {
       message: 'Image deleted successfully',
@@ -125,23 +110,10 @@ export default class FileService implements FileServiceInterface {
       uploaderId,
     });
 
-    const s3Response = await this.s3Service.uploadFile(
-      base64Data,
-      fileKey,
-      mediaType
-    );
-
-    console.log(
-      'MARTIN_LOG=> FileService -> uploadFileToS3 -> fileEntityInstance',
-      fileEntityInstance
-    );
-
-    await this.tableService.create(fileEntityInstance);
-
-    console.log(
-      'MARTIN_LOG=> FileService -> uploadFileToS3 -> response',
-      s3Response
-    );
+    await Promise.all([
+      this.s3Service.uploadFile(base64Data, fileKey, mediaType),
+      this.tableService.create(fileEntityInstance),
+    ]);
 
     return fileEntityInstance;
   }
@@ -176,7 +148,6 @@ export default class FileService implements FileServiceInterface {
       };
     }
 
-    console.log('MARTIN_LOG=> FileService -> getFile -> response', response);
     return {
       ...this.fileEntity.getClean(file),
       signedUrl,
@@ -185,10 +156,7 @@ export default class FileService implements FileServiceInterface {
 
   async deleteFileFromS3(key: string) {
     const response = await this.s3Service.deleteFile(key);
-    console.log(
-      'MARTIN_LOG=> FileService -> deleteFileFromS3 -> response',
-      response
-    );
+
     return response;
   }
 
@@ -207,10 +175,7 @@ export default class FileService implements FileServiceInterface {
       fileKey,
       mediaType
     );
-    console.log(
-      'MARTIN_LOG=> FileService -> uploadFileToS3 -> response',
-      response
-    );
+
     return response;
   }
 }

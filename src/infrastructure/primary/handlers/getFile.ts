@@ -14,6 +14,5 @@ export const handler = async (command, context) => {
     action.execute,
     commandOutput
   );
-  console.log('MARTIN_LOG=> uploadImage -> actionResponse', actionResponse);
   return actionResponse;
 };

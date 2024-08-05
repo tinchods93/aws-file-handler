@@ -28,18 +28,13 @@ export default class GetFileAction implements ApplicationActionInterface {
         commandPayload.parameters
       );
 
-      console.log('MARTIN_LOG=> payload', payload);
       const response = await this.fileRepository.getFile(payload);
-      console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> response',
-        response
-      );
+
       return this.actionResponse.success({
         statusCode: StatusCodes.OK,
         data: response,
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> UploadFileAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,

@@ -58,10 +58,6 @@ export default class TableService implements TableServiceInterface {
   async query(
     params: QueryTableItemMethodInput
   ): Promise<ObjectType[] | undefined> {
-    console.log(
-      'MARTIN_LOG: TableService -> query -> params',
-      JSON.stringify(params)
-    );
     const Model = this.modelType.query(params.query);
 
     if (params.options?.using_index) {
@@ -70,10 +66,6 @@ export default class TableService implements TableServiceInterface {
 
     const response = await Model.exec();
 
-    console.log(
-      'MARTIN_LOG: TableService -> query -> response',
-      JSON.stringify(response)
-    );
     if (!response) return undefined;
 
     return response.map((item) => item.toJSON());

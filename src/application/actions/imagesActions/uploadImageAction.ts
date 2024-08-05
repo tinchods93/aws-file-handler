@@ -24,23 +24,12 @@ export default class UploadImageAction implements ApplicationActionInterface {
 
   public execute = async (commandPayload: HandlerCommandType) => {
     try {
-      console.log(
-        'MARTIN_LOG=> UploadImageAction -> execute -> commandPayload',
-        commandPayload?.body
-      );
-
       const payload = new ZodSchemaValidation(uploadFileInputSchema).validate(
         commandPayload.body
       );
 
-      console.log('MARTIN_LOG=> payload', { payload });
-
       const response = await this.fileRepository.uploadImage(payload);
 
-      console.log(
-        'MARTIN_LOG=> UploadImageAction -> execute -> response',
-        response
-      );
       return this.actionResponse.success({
         statusCode: StatusCodes.CREATED,
         data: {
@@ -49,7 +38,6 @@ export default class UploadImageAction implements ApplicationActionInterface {
         },
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> UploadImageAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,

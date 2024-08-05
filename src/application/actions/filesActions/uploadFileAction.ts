@@ -24,24 +24,11 @@ export default class UploadFileAction implements ApplicationActionInterface {
 
   public execute = async (commandPayload: HandlerCommandType) => {
     try {
-      console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> commandPayload',
-        commandPayload?.body?.uploaderId,
-        commandPayload?.body?.tags
-      );
-
       const payload = new ZodSchemaValidation(uploadFileInputSchema).validate(
         commandPayload.body
       );
 
-      console.log('MARTIN_LOG=> payload', { payload });
-
       const response = await this.fileRepository.uploadFile(payload);
-
-      console.log(
-        'MARTIN_LOG=> UploadFileAction -> execute -> response',
-        response
-      );
 
       return this.actionResponse.success({
         statusCode: StatusCodes.CREATED,
@@ -51,7 +38,6 @@ export default class UploadFileAction implements ApplicationActionInterface {
         },
       });
     } catch (error) {
-      console.log('MARTIN_LOG=> UploadFileAction -> execute -> error', error);
       return this.actionResponse.error({
         statusCode: error.status ?? StatusCodes.INTERNAL_SERVER_ERROR,
         data: error,
