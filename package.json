@@ -7,8 +7,8 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint --fix;",
     "test:integration": "sh ./scripts/integration_test.sh",
-    "deploy": "sls deploy --stage develop",
-    "remove": "sls remove --stage develop",
+    "deploy-dev": "sls deploy --stage develop",
+    "remove-dev": "sls remove --stage develop",
     "package": "sls package",
     "test": "jest ./tests/unit/zodSchemaValidation.test.ts --setupFiles dotenv/config --verbose",
     "start": "ts-node app/server/index.ts"
@@ -65,6 +65,7 @@
     "serverless": "^3.38.0",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-prune-plugin": "^2.0.1",
+    "serverless-domain-manager":"^7.1.0",
     "serverless-webpack": "^5.5.5",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.3.1",

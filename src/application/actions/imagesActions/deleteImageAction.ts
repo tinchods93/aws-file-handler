@@ -25,7 +25,7 @@ export default class DeleteImageAction implements ApplicationActionInterface {
   public execute = async (commandPayload: HandlerCommandType) => {
     try {
       const payload = new ZodSchemaValidation(deleteImageInputSchema).validate(
-        commandPayload.parameters
+        commandPayload.parameters ?? commandPayload.body
       );
 
       console.log('MARTIN_LOG=> payload', payload);
