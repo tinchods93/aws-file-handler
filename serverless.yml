@@ -1,4 +1,4 @@
-service: file-handler-${self:custom.projectName}${env:developerStack, ''}
+service: ${self:custom.projectName}-file-handler${env:developerStack, ''}
 
 configValidationMode: off
 frameworkVersion: '>=3'
@@ -7,7 +7,7 @@ custom:
   useDotenv: true
   config: ${file(config/index.js)}
   projectName: formsoft
-  stackPrefix: ${self:service}-${self:custom.projectName}${env:developerStack, ''}-${self:provider.stage}
+  stackPrefix: ${self:service}-${self:provider.stage}
 
   tokenSecurityPrefix: aws-token-security-${self:provider.stage}
 
