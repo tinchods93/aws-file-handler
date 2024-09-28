@@ -1,4 +1,4 @@
-service: aws-file-handler${env:developerStack, ''}
+service: file-handler-${self:custom.projectName}${env:developerStack, ''}
 
 configValidationMode: off
 frameworkVersion: '>=3'
@@ -6,7 +6,8 @@ frameworkVersion: '>=3'
 custom:
   useDotenv: true
   config: ${file(config/index.js)}
-  stackPrefix: ${self:service}-${self:provider.stage}
+  projectName: formsoft
+  stackPrefix: ${self:service}-${self:custom.projectName}${env:developerStack, ''}-${self:provider.stage}
 
   tokenSecurityPrefix: aws-token-security-${self:provider.stage}
 
@@ -23,7 +24,7 @@ custom:
 
   customDomain:
     domainName: ${self:custom.${self:provider.stage, 'develop'}Domain}
-    basePath: files-api${env:developerStack, ''}
+    basePath: ${self:custom.projectName}/files-api${env:developerStack, ''}
     endpointType: 'regional'
     # apiType: http 
 
