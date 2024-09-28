@@ -20,7 +20,7 @@ uploadFile:
 
 getFile:
   handler: src/infrastructure/primary/handlers/getFile.handler
-  description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+  description: 'Obtains a file from the S3 bucket and returns it to the user.'
   name: ${file(resources/index.json):functions.getFile}
   timeout: 25
   logRetentionInDays: 14
@@ -56,7 +56,7 @@ getFile:
 
 updateFile:
   handler: src/infrastructure/primary/handlers/updateFile.handler
-  description: 'Receives a file and uploads it to S3. The file is then stored in the database and a response is returned with the file URL and the file ID'
+  description: 'Updates a file in the S3 bucket and returns the updated file URL.'
   name: ${file(resources/index.json):functions.updateFile}
   timeout: 25
   logRetentionInDays: 14
@@ -106,6 +106,6 @@ deleteImage:
         path: images/{publicId}
         method: delete
         cors: true
-        # authorizer:
-        #   type: CUSTOM
-        #   authorizerId: { Ref: Authorizer }
+        authorizer:
+          type: CUSTOM
+          authorizerId: { Ref: Authorizer }
