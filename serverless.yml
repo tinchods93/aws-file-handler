@@ -20,7 +20,7 @@ custom:
     number: 1
 
   developDomain: e1-api-protoprime.click
-  prodDomain: api-protoprime.click
+  prodDomain: prod-api-protoprime.click
 
   customDomain:
     domainName: ${self:custom.${self:provider.stage, 'develop'}Domain}
@@ -48,6 +48,7 @@ provider:
   environment:
     SERVICE: ${self:service}
     REGION: ${self:provider.region}
+    STAGE: ${self:provider.stage}
     ACCOUNT_ID: ${self:provider.accountId}
     LOG_LEVEL: DEBUG
     JWT_SECRET: 'test-secret'

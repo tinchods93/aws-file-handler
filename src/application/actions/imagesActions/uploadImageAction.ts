@@ -25,7 +25,7 @@ export default class UploadImageAction implements ApplicationActionInterface {
   public execute = async (commandPayload: HandlerCommandType) => {
     try {
       const payload = new ZodSchemaValidation(uploadFileInputSchema).validate(
-        commandPayload.body
+        commandPayload.body ?? commandPayload
       );
 
       const response = await this.fileRepository.uploadImage(payload);
