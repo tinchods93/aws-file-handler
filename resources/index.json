@@ -8,7 +8,7 @@
         "deleteFile": "${self:custom.stackPrefix}-deleteFileAction"
     },
     "tables": {
-        "filesMetadata": "${self:custom.stackPrefix}-filesMetadata"
+        "filesMetadata": "${self:custom.stackPrefix}-metadata"
     },
     "s3": {
         "fileStorage": "${self:custom.stackPrefix}-file-storage"

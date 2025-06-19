@@ -6,10 +6,8 @@ frameworkVersion: '>=3'
 custom:
   useDotenv: true
   config: ${file(config/index.js)}
-  projectName: formsoft
+  projectName: aws
   stackPrefix: ${self:service}-${self:provider.stage}
-
-  tokenSecurityPrefix: aws-token-security-${self:provider.stage}
 
   # Prune
   prune:
@@ -24,9 +22,8 @@ custom:
 
   customDomain:
     domainName: ${self:custom.${self:provider.stage, 'develop'}Domain}
-    basePath: ${self:custom.projectName}/files-api${env:developerStack, ''}
+    basePath: files-ms${env:developerStack, ''}
     endpointType: 'regional'
-    # apiType: http 
 
 provider:
   name: aws
@@ -55,6 +52,9 @@ provider:
     OWNER_PROJECT_NAME: 'Protoprime'
     FILES_METADATA_TABLE_NAME: ${file(resources/index.json):tables.filesMetadata}
     FILE_BUCKET_NAME: ${file(resources/index.json):s3.fileStorage}
+    CLOUDINARY_CLOUD_NAME: ${self:custom.config.services.cloudinary.cloudName}
+    CLOUDINARY_API_KEY: ${self:custom.config.services.cloudinary.apiKey}
+    CLOUDINARY_API_SECRET: ${self:custom.config.services.cloudinary.apiSecret}
 
 package:
   individually: false
