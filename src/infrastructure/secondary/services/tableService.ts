@@ -1,6 +1,6 @@
 import dynamoose from 'dynamoose';
 import { Schema, SchemaDefinition } from 'dynamoose/dist/Schema';
-import { ModelType, ObjectType } from 'dynamoose/dist/General';
+import { ModelType } from 'dynamoose/dist/General';
 import { AnyItem } from 'dynamoose/dist/Item';
 import { TableServiceInterface } from './interface/tableServiceInterface';
 import {
@@ -38,9 +38,8 @@ export default class TableService implements TableServiceInterface {
 
   /**
    * Crea un nuevo elemento en la tabla.
-   * @param {any} data - Los datos del elemento a crear.
-   * @returns {Promise<any>} - El elemento creado.
-   * @throws {TableException} - Si ocurre un error al crear el elemento.
+   * @param data Objeto con los datos a guardar en la tabla.
+   * @returns Promesa con el resultado de la operación de guardado.
    */
   async create(data: CreateTableItemMethodInput) {
     const model = new this.modelType(data);
@@ -48,16 +47,11 @@ export default class TableService implements TableServiceInterface {
   }
 
   /**
-   * Realiza una consulta a la tabla.
-   * @param {Object} params - Los parámetros de la consulta.
-   * @param {any} params.query - La consulta a realizar.
-   * @param {any} [params.options] - Las opciones de la consulta.
-   * @returns {Promise<ObjectType[] | undefined>} - Los elementos que coinciden con la consulta.
-   * @throws {TableException} - Si ocurre un error al realizar la consulta.
+   * Realiza una consulta a la tabla DynamoDB.
+   * @param params Parámetros de consulta, incluyendo query y opciones.
+   * @returns Promesa con los resultados de la consulta en formato JSON.
    */
-  async query(
-    params: QueryTableItemMethodInput
-  ): Promise<ObjectType[] | undefined> {
+  async query(params: QueryTableItemMethodInput) {
     const Model = this.modelType.query(params.query);
 
     if (params.options?.using_index) {
@@ -71,9 +65,12 @@ export default class TableService implements TableServiceInterface {
     return response.map((item) => item.toJSON());
   }
 
-  async update(
-    params: UpdateTableItemMethodInput
-  ): Promise<ObjectType | undefined> {
+  /**
+   * Actualiza un elemento existente en la tabla.
+   * @param params Parámetros con la clave y los datos a actualizar.
+   * @returns Promesa con el elemento actualizado o undefined si no existe.
+   */
+  async update(params: UpdateTableItemMethodInput) {
     const response = (
       await this.modelType.update(params.key, params.payload, {
         returnValues: 'ALL_NEW',
@@ -85,7 +82,12 @@ export default class TableService implements TableServiceInterface {
     return response;
   }
 
-  async delete(params: TableKeyType): Promise<boolean> {
+  /**
+   * Elimina un elemento de la tabla por su clave.
+   * @param params Clave primaria del elemento a eliminar.
+   * @returns Promesa que resuelve en true si la eliminación fue exitosa.
+   */
+  async delete(params: TableKeyType) {
     await this.modelType.delete(params);
 
     return true;

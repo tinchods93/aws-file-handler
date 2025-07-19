@@ -1,16 +1,15 @@
 {
     "functions": {
-        "uploadImage": "${self:custom.stackPrefix}-uploadImageAction",
-        "deleteImage": "${self:custom.stackPrefix}-deleteImageAction",
-        "uploadFile": "${self:custom.stackPrefix}-uploadFileAction",
-        "getFile": "${self:custom.stackPrefix}-getFileAction",
-        "updateFile": "${self:custom.stackPrefix}-updateFileAction",
-        "deleteFile": "${self:custom.stackPrefix}-deleteFileAction"
+        "uploadImage": "${self:custom.stackPrefix}-images-upload",
+        "removeImage": "${self:custom.stackPrefix}-images-remove",
+        "uploadFile": "${self:custom.stackPrefix}-files-upload",
+        "getFile": "${self:custom.stackPrefix}-files-get",
+        "removeFile": "${self:custom.stackPrefix}-files-remove"
     },
     "tables": {
-        "filesMetadata": "${self:custom.stackPrefix}-metadata"
+        "metadata": "${self:custom.stackPrefix}-metadata"
     },
     "s3": {
-        "fileStorage": "${self:custom.stackPrefix}-file-storage"
+        "fileStorage": "${self:custom.stackPrefix}-files-storage"
     }
 }

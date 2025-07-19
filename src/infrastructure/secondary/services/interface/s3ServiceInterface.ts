@@ -1,8 +1,8 @@
 export const S3_SERVICE_TOKEN = Symbol('S3ServiceInterface');
 
 export interface S3ServiceInterface {
-  uploadFile(file: string, fileName: string, mediaType: string): Promise<any>;
-  getFile(key: string): Promise<any>;
-  deleteFile(key: string): Promise<any>;
-  getSignedurl(key: string): Promise<any>;
+  upload(uploadDTO: { file: string; id: string }): Promise<any>;
+  get(id: string): Promise<any>;
+  delete(id: string): Promise<any>;
+  getSignedUrl(id: string): Promise<any>;
 }

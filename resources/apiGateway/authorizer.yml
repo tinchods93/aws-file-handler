@@ -2,7 +2,7 @@ Resources:
   Authorizer:
     Type: AWS::ApiGateway::Authorizer
     Properties:
-      AuthorizerResultTtlInSeconds: 300
+      AuthorizerResultTtlInSeconds: 0
       AuthorizerUri:
         Fn::Join:
           - ''

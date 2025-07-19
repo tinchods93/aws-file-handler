@@ -2,7 +2,7 @@ Resources:
   ScopesTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ${file(resources/index.json):tables.filesMetadata}
+      TableName: ${file(resources/index.json):tables.metadata}
       AttributeDefinitions:
         - AttributeName: pk
           AttributeType: S

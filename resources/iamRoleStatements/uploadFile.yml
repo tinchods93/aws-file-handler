@@ -14,5 +14,5 @@
     - dynamodb:Query
     - dynamodb:PutItem
   Resource:
-    - !Sub arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${file(resources/index.json):tables.filesMetadata}
-    - !Sub arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${file(resources/index.json):tables.filesMetadata}/index/*
+    - !Sub arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${file(resources/index.json):tables.metadata}
+    - !Sub arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${file(resources/index.json):tables.metadata}/index/*

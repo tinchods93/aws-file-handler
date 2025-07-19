@@ -1,11 +1,7 @@
-import { CloudinaryUploadResponseType } from '../types/cloudinaryServiceTypes';
-
 export const CLOUDINARY_SERVICE_TOKEN = Symbol('CloudinaryServiceInterface');
 
 export interface CloudinaryServiceInterface {
-  uploadImage(
-    file: string,
-    publicId: string
-  ): Promise<CloudinaryUploadResponseType>;
-  deleteImage(publicId: string): Promise<any>;
+  upload(uploadDTO: { file: string; id: string }): Promise<string>;
+  delete(id: string): Promise<boolean>;
+  getUri(id: string): string;
 }

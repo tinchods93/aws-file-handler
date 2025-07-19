@@ -1,3 +1,4 @@
+# MARTIN_LOG DESCOMENTAR - service: ${self:custom.projectName}-file-handler${env:developerStack, ''}
 service: ${self:custom.projectName}-file-handler${env:developerStack, ''}
 
 configValidationMode: off
@@ -50,7 +51,7 @@ provider:
     LOG_LEVEL: DEBUG
     JWT_SECRET: 'test-secret'
     OWNER_PROJECT_NAME: 'Protoprime'
-    FILES_METADATA_TABLE_NAME: ${file(resources/index.json):tables.filesMetadata}
+    FILES_METADATA_TABLE_NAME: ${file(resources/index.json):tables.metadata}
     FILE_BUCKET_NAME: ${file(resources/index.json):s3.fileStorage}
     CLOUDINARY_CLOUD_NAME: ${self:custom.config.services.cloudinary.cloudName}
     CLOUDINARY_API_KEY: ${self:custom.config.services.cloudinary.apiKey}
