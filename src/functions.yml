@@ -54,7 +54,6 @@ removeFile:
           type: CUSTOM
           authorizerId: { Ref: Authorizer }
 
-
 uploadImage:
   handler: src/infrastructure/primary/handlers/images/upload/index.handler
   description: 'Receives an image and uploads it to Cloudinary. The metadata is then stored in the database and a response is returned with the image URL and the image ID'
