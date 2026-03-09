@@ -39,10 +39,7 @@ export default class CloudinaryService implements CloudinaryServiceInterface {
    */
   async delete(id: string) {
     const response = await cloudinary.uploader.destroy(id);
-    console.log(
-      'MARTIN_LOG=> Cloudinary delete response:',
-      JSON.stringify(response)
-    );
+
     if (response.result !== 'ok') {
       throw new Error(
         `Error deleting image from Cloudinary: ${response.result}`
